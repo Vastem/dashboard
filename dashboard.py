@@ -17,8 +17,6 @@ customtkinter.set_default_color_theme("dark-blue")
 class App(customtkinter.CTk):
     data = []
     ejecutar = True
-    password = "ea"
-    estado_actual = "DESOCUPADO"
 
     def get_data(self):
         self.data.clear()
@@ -85,22 +83,13 @@ class App(customtkinter.CTk):
             row=4, column=0, padx=20, pady=10, sticky="nsew")
 
         self.label_pass = customtkinter.CTkLabel(
-            self.sidebar_frame, text=f'Contrasena actual: {self.password}', font=customtkinter.CTkFont(size=14, weight="bold"))
+            self.sidebar_frame, text=f'Contrasena:', font=customtkinter.CTkFont(size=14, weight="bold"))
         self.label_pass.grid(row=6, column=0, pady=(10, 0), sticky="nsew")
 
         self.btn_password = customtkinter.CTkButton(
             self.sidebar_frame, command=self.set_contrasena_evt, text="Cambiar contrasena acceso")
         self.btn_password.grid(row=7, column=0, padx=20,
                                pady=(0, 10), sticky="nsew")
-
-        self.label_state = customtkinter.CTkLabel(
-            self.sidebar_frame, text="Estado: ", font=customtkinter.CTkFont(size=14, weight="bold"))
-        self.label_state.grid(row=8, column=0, pady=(10, 0), sticky="nsew")
-
-        self.estados_menu = customtkinter.CTkOptionMenu(self.sidebar_frame, values=[
-            "DESOCUPADO", "OCUPADO"], command=self.update_state)
-        self.estados_menu.grid(
-            row=9, column=0, padx=20, pady=(0, 30), sticky="nsew")
 
         # create textbox (Frame)
         self.frameImage = customtkinter.CTkFrame(self, width=250)
@@ -443,16 +432,11 @@ class App(customtkinter.CTk):
         x = int((screen_width / 2) - (window_width / 2))
         y = int((screen_height / 2) - (window_height / 2))
         dialog.geometry(f"+{x}+{y}")
-        """ response = requests.get(
-            f'http://192.168.0.3/contrasena?{dialog.get_input()}')
+        response = requests.get(
+            f'http://192.168.0.3/password?password={dialog.get_input()}')
         if response.status_code == 200:
             self.label_pass.configure(
-                text=f'Contrasena actual: {dialog.get_input()}') """
-
-    def update_state(self, estado):
-        # response = requests.get(
-        #   f'http://192.168.0.3/estado?{estado}')
-        print()
+                text=f'Contrasena actual: {dialog.get_input()}')
 
 
 if __name__ == "__main__":
